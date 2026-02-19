@@ -13,7 +13,9 @@ php artisan vendor:publish --tag=ekwanza-config
 ## .env
 
 EKWANZA_APP_KEY=
+
 EKWANZA_APP_SECRET=
+
 EKWANZA_ENV=sandbox
 
 ## Usage
