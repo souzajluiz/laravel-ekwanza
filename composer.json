@@ -1,6 +1,6 @@
 {
     "name": "souzajluiz/laravel-ekwanza",
-    "description": "Laravel integration for ekwanza-php-sdk",
+    "description": "A Laravel package to integrate with Ekwanza API, providing an easy-to-use wrapper for managing transactions, customers, and tickets.",
     "type": "library",
     "license": "MIT",
     "authors": [
