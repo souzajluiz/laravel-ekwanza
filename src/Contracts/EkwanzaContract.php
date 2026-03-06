@@ -10,4 +10,5 @@ interface EkwanzaContract
     public function transactions();
     public function customers();
     public function tickets();
+    public function gateway();
 }

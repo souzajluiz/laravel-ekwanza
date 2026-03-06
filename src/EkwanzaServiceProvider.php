@@ -3,7 +3,7 @@
 namespace Souzajluiz\LaravelEkwanza;
 
 use Illuminate\Support\ServiceProvider;
-use Souzajluiz\Ekwanza\Client;
+use Souzajluiz\Ekwanza\{Client, Config};
 
 class EkwanzaServiceProvider extends ServiceProvider
 {
@@ -16,15 +16,36 @@ class EkwanzaServiceProvider extends ServiceProvider
 
         $this->app->singleton(EkwanzaManager::class, function ($app) {
 
-            $config = $app['config']['ekwanza'];
+            $configValues = $app['config']->get('ekwanza', []);
 
-            $client = new Client([
-                'app_key' => $config['app_key'],
-                'app_secret' => $config['app_secret'],
-                'environment' => $config['environment'],
+            $validator = $app['validator']->make($configValues, [
+                'app_key' => 'required|string'
             ]);
 
-            return new EkwanzaManager($client);
+            if ($validator->fails()) {
+                throw new \InvalidArgumentException('Ekwanza config validation failed: ' . $validator->errors()->first());
+            }
+
+            $envValue = $configValues['environment'] ?? 'sandbox';
+            $environment = $envValue instanceof \Souzajluiz\Ekwanza\Enums\Environment
+                ? $envValue
+                : (\Souzajluiz\Ekwanza\Enums\Environment::tryFrom($envValue) ?? \Souzajluiz\Ekwanza\Enums\Environment::SANDBOX);
+
+            $config = new Config(
+                apiKey: $configValues['app_key'] ?? '',
+                notificationToken: $configValues['notification_token'] ?? '',
+                merchantRegistrationNumber: $configValues['merchant_registration_number'] ?? '',
+                environment: $environment,
+                
+                // Gateway Auth Credentials (optional if only using Tickets)
+                clientId: $configValues['client_id'] ?? '',
+                clientSecret: $configValues['client_secret'] ?? '',
+                resource: $configValues['resource'] ?? ''
+            );
+
+            $ekwanza = new Client($config);
+
+            return new EkwanzaManager($ekwanza);
         });
 
         $this->app->alias(EkwanzaManager::class, 'ekwanza');

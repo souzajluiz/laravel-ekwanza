@@ -33,4 +33,9 @@ class EkwanzaManager implements EkwanzaContract
     {
         return $this->client->tickets();
     }
+
+    public function gateway()
+    {
+        return $this->client->gateway();
+    }
 }
