@@ -3,7 +3,7 @@
 namespace Souzajluiz\LaravelEkwanza;
 
 use Illuminate\Support\ServiceProvider;
-use Ekwanza\Client;
+use Souzajluiz\Ekwanza\Client;
 
 class EkwanzaServiceProvider extends ServiceProvider
 {

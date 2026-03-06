@@ -2,7 +2,7 @@
 
 namespace Souzajluiz\LaravelEkwanza;
 
-use Ekwanza\Client;
+use Souzajluiz\Ekwanza\Client;
 use Souzajluiz\LaravelEkwanza\Contracts\EkwanzaContract;
 
 class EkwanzaManager implements EkwanzaContract

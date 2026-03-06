@@ -2,7 +2,7 @@
 
 namespace Souzajluiz\LaravelEkwanza\Contracts;
 
-use Ekwanza\Client;
+use Souzajluiz\Ekwanza\Client;
 
 interface EkwanzaContract
 {
